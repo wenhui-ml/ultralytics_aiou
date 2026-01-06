@@ -94,14 +94,29 @@ Experiments conducted on **MS COCO 2017** and **VisDrone 2019** demonstrate the 
 
 ---
 
-## 🛠️ Usage
+## 🛠️ Installation
 
-AIoU is implemented in `ultralytics/utils/metrics.py`. To use it during training, ensure the `AIoU=True` flag is passed to the `bbox_iou` function. This has been integrated into:
-- `ultralytics/utils/loss.py`: Used in `BboxLoss` for training.
-- `ultralytics/utils/tal.py`: Used in `TaskAlignedAssigner` for sample assignment.
+To use this improved framework with AIoU, install it locally in editable mode:
+
+```bash
+pip install -v -e .
+```
+
+---
+
+## 🚀 Usage
+
+### 1. Training with AIoU
+You can train any YOLO model with AIoU by using the standard Ultralytics training command. AIoU is integrated into the core loss function of this repository.
+
+```bash
+yolo train model=yolo11n.pt data=coco8.yaml epochs=100 imgsz=640
+```
+
+### 2. Python API
+AIoU is implemented in `ultralytics/utils/metrics.py`. You can also use it directly in your Python code:
 
 ```python
-# Example usage in metrics.py
 from ultralytics.utils.metrics import bbox_iou
 
 # Calculate AIoU
