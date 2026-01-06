@@ -6,38 +6,13 @@ This repository is an improved version of the standard [Ultralytics](https://git
 
 ## 🚀 Overview
 
-**AIoU** is designed to address the limitations of standard IoU variants (like CIoU) in challenging scenarios, such as detecting **small objects** or resolving **highly overlapping instances**. By introducing an **Edge Alignment Penalty** and an **Adaptive Weighting Mechanism**, AIoU provides a more granular optimization signal for precise boundary alignment.
+**AIoU** is designed to address the limitations of standard IoU variants (like CIoU) in challenging scenarios, such as detecting **small objects** or resolving **highly overlapping instances**. By introducing an **Edge Alignment Penalty** and an **Adaptive Weighting Mechanism**, AIoU provides a more granular optimization signal for precise boundary alignment. **AIoU does not introduce any computational burden and significantly enhances the detection capabilities of the YOLO series.**
 
 ### Key Features
 - **Edge Alignment Penalty**: Explicitly measures the Euclidean distance between corresponding edge midpoints of the predicted and ground-truth boxes.
 - **Adaptive Weighting**: Dynamically balances the aspect ratio penalty and the edge alignment penalty based on the IoU distribution of the batch.
 - **Seamless Integration**: Fully compatible with the YOLO series (YOLOv10, YOLO11, YOLOv12) within the Ultralytics ecosystem.
 - **Superior Performance**: Consistent AP gains (+0.1% to +0.4%) on COCO and VisDrone datasets without adding inference overhead.
-
----
-
-## 📖 Methodology
-
-AIoU enhances the Complete IoU (CIoU) formulation by adding a specialized edge penalty term $e$ and dynamic weights $\lambda_v, \lambda_e$:
-
-$$AIoU = \text{IoU} - \left( \frac{\rho^2(b, b^{gt})}{c^2} + \lambda_v \cdot \alpha \cdot v + \lambda_e \cdot \gamma \cdot e \right)$$
-
-### 1. Edge Alignment Penalty ($e$)
-The edge penalty $e$ is calculated as the average normalized squared Euclidean distance between corresponding edge midpoints (left, right, top, bottom):
-$$e_{raw} = \frac{1}{4} \left( \frac{d^2_{left}}{(h^{gt})^2} + \frac{d^2_{right}}{(h^{gt})^2} + \frac{d^2_{top}}{(w^{gt})^2} + \frac{d^2_{bottom}}{(w^{gt})^2} \right)$$
-This term is constrained using an arctan function to ensure stability: $e = \frac{2}{\pi} \arctan(e_{raw})$.
-
-The trade-off parameters $\alpha$ and $\gamma$ are defined as:
-$$\alpha = \frac{v}{v - \text{IoU} + (1 + \epsilon)}, \quad \gamma = \frac{e}{e - \text{IoU} + (1 + \epsilon)}$$
-
-### 2. Adaptive Weighting Mechanism
-A scale factor is computed using the batch IoU mean ($\mu_{IoU}$) and interquartile range spread:
-$$\text{scale\_factor} = (1 - \mu_{IoU}) \cdot (C_{spread} + \text{spread})$$
-The weights $\lambda_e$ and $\lambda_v$ are then adaptively adjusted:
-- $\lambda_e = \tanh(\text{scale\_factor} \times (0.5 - \text{IoU}_{pair}))$
-- $\lambda_v = 1 - \lambda_e$
-
-This allows the model to prioritize **edge alignment** for low-IoU pairs and **aspect ratio refinement** for high-IoU pairs.
 
 ---
 
