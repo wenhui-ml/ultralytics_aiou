@@ -6,7 +6,7 @@ This repository is an improved version of the standard [Ultralytics](https://git
 
 ## 🚀 Overview
 
-**AIoU** is designed to address the limitations of standard IoU variants (like CIoU) in challenging scenarios, such as detecting **small objects** or resolving **highly overlapping instances**. By introducing an **Edge Alignment Penalty** and an **Adaptive Weighting Mechanism**, AIoU provides a more granular optimization signal for precise boundary alignment. **AIoU does not introduce any computational burden and significantly enhances the detection capabilities of the YOLO series.**
+**AIoU** is designed to address the limitations of standard IoU variants (like CIoU) in challenging scenarios, such as detecting **small objects** or resolving **highly overlapping instances**. By introducing an **Edge Alignment Penalty** and an **Adaptive Weighting Mechanism**, AIoU provides a more granular optimization signal for precise boundary alignment. **AIoU does not introduce any computational burden and enhances the detection capabilities of the YOLO series.**
 
 ### Key Features
 - **Edge Alignment Penalty**: Explicitly measures the Euclidean distance between corresponding edge midpoints of the predicted and ground-truth boxes.
@@ -21,7 +21,7 @@ This repository is an improved version of the standard [Ultralytics](https://git
 Experiments conducted on **MS COCO 2017** and **VisDrone 2019** demonstrate the effectiveness of AIoU across various YOLO architectures.
 
 ### COCO 2017 Results
-| Model | Loss | AP(%) | $\Delta$AP | Params(M) | FLOPs(G) |
+| Model | Loss | AP(%) | ΔAP | Params(M) | FLOPs(G) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | YOLOv10n | CIoU | 38.5 | | 2.3 | 6.7 |
 | YOLOv10n | **AIoU** | **38.9** | **+0.4** | 2.3 | 6.7 |
@@ -57,7 +57,7 @@ Experiments conducted on **MS COCO 2017** and **VisDrone 2019** demonstrate the 
 | YOLOv12x | **AIoU** | **55.5** | **+0.3** | 59.3 | 199.0 |
 
 ### VisDrone Results
-| Model | Loss | AP(%) | $\Delta$AP | Params(M) | FLOPs(G) |
+| Model | Loss | AP(%) | ΔAP | Params(M) | FLOPs(G) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | YOLOv10n | CIoU | 20.1 | | 2.3 | 6.7 |
 | YOLOv10n | **AIoU** | **20.4** | **+0.3** | 2.3 | 6.7 |
